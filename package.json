@@ -1,27 +1,11 @@
 {
-  "name": "vue-persona",
-  "version": "0.0.1",
-  "description": "Vue Plugin to use Persona handily",
-  "main": "dist/index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/hmsk/vue-persona.git"
-  },
-  "keywords": [
-    "persona",
-    "vue",
-    "kyc",
-    "identity",
-    "verification"
-  ],
+  "description": "JS libraries to use withpersona.com",
+  "repository": "ssh://git@github.com/hmsk/vue-persona.git",
   "author": "Kengo Hamasaki <k.hamasaki@gmail.com>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/hmsk/vue-persona/issues"
-  },
-  "homepage": "https://github.com/hmsk/vue-persona#readme",
-  "dependencies": {}
+  "private": true,
+  "workspaces": [
+    "packages/persona-js",
+    "packages/vue-persona"
+  ]
 }
