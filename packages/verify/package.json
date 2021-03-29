@@ -1,0 +1,12 @@
+{
+  "name": "@persona-js/verify",
+  "version": "0.0.1-0",
+  "description": "An unofficial Persona client to verify customers",
+  "main": "./dist/index.js",
+  "repository": "https://github.com/hmsk/persona-js",
+  "author": "Kengo Hamasaki <k.hamasaki@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "rollup -c rollup.config.ts"
+  }
+}
