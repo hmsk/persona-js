@@ -8,6 +8,7 @@ export default {
   output: {
     file: pkg.main,
     format: 'cjs',
+    exports: 'named'
   },
 
   plugins: [typescript()],
