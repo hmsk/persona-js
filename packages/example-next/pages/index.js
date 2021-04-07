@@ -1,7 +1,10 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
+import Persona from '@persona-js/verify'
+
 export default function Home() {
+  console.log(Persona('tmpl_xyz'))
   return (
     <div className={styles.container}>
       <Head>
