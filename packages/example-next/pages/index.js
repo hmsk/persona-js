@@ -4,9 +4,11 @@ import styles from '../styles/Home.module.css'
 import Persona from '@persona-js/verify'
 
 export default function Home() {
-  console.log(Persona('tmpl_xyz'))
+  const persona = Persona('tmpl_xyz')
   return (
     <div className={styles.container}>
+      <button onClick={() => persona.start()}>Start Embedded Flow</button>
+      <button onClick={() => persona.getHostedFlowUrl()}>Get a URL for Hosted Flow</button>
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
