@@ -15,17 +15,16 @@ const verifyClient = (
   };
 
   const start = () => {
-    const iframeUrl = `https://${host}/widget/${templateId}&environment=${environment}`;
+    const iframeUrl = `https://${host}/widget?template-id=${templateId}&environment=${environment}`;
     alert(iframeUrl);
-    /*
-      Build this programmatically
-      <iframe
-        allow='camera'
-        sandbox='allow-same-origin allow-scripts allow-forms allow-popups allow-modals allow-top-navigation-by-user-activation'
-        frameBorder='0'
-        src={baseUrl + '/widget' + queryParams}
-      ></iframe>
-    */
+    const iframe = document.createElement("iframe");
+    iframe.allow = "camera";
+    iframe.src = iframeUrl;
+    iframe.setAttribute(
+      "sandbox",
+      "allow-same-origin allow-scripts allow-forms allow-popups allow-modals allow-top-navigation-by-user-activation"
+    );
+    document.body.prepend(iframe);
   };
 
   const getHostedFlowUrl = () => {
