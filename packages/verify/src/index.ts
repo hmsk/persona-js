@@ -1,3 +1,12 @@
+const IFRAME_SANDBOX_PERMISSIONS = [
+  'allow-same-origin',
+  'allow-scripts',
+  'allow-forms',
+  'allow-popups',
+  'allow-modals',
+  'allow-top-navigation-by-user-activation'
+]
+
 const verifyClient = (
   templateId: string,
   environment: "sandbox" | "production" = "sandbox",
@@ -15,20 +24,18 @@ const verifyClient = (
   };
 
   const start = () => {
-    const iframeUrl = `https://${host}/widget?template-id=${templateId}&environment=${environment}`;
-    alert(iframeUrl);
     const iframe = document.createElement("iframe");
     iframe.allow = "camera";
-    iframe.src = iframeUrl;
+    iframe.src = `https://${host}/widget?template-id=${id}&environment=${environment}&iframe-origin=${window.location.origin}`;
     iframe.setAttribute(
       "sandbox",
-      "allow-same-origin allow-scripts allow-forms allow-popups allow-modals allow-top-navigation-by-user-activation"
+      IFRAME_SANDBOX_PERMISSIONS.join(' ')
     );
     document.body.prepend(iframe);
   };
 
   const getHostedFlowUrl = () => {
-    const hostedUrl = `https://${host}/verify?template-id=${templateId}&environment=${environment}`;
+    const hostedUrl = `https://${host}/verify?template-id=${id}&environment=${environment}`;
     alert(hostedUrl);
   };
 
