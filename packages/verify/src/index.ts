@@ -4,7 +4,7 @@ const IFRAME_SANDBOX_PERMISSIONS = [
   'allow-forms',
   'allow-popups',
   'allow-modals',
-  'allow-top-navigation-by-user-activation'
+  'allow-top-navigation-by-user-activation',
 ]
 
 const IFRAME_STYLE = `
@@ -39,51 +39,45 @@ const BACKDROP_STYLE = `
 
 const verifyClient = (
   templateId: string,
-  environment: "sandbox" | "production" = "sandbox",
-  host: string = "withpersona.com"
+  environment: 'sandbox' | 'production' = 'sandbox',
+  host: string = 'withpersona.com',
 ) => {
-  const id = templateId;
-  const listeners = [];
+  const id = templateId
+  const listeners = []
 
-  const on = (
-    eventName: "complete" | "fail" | "start",
-    listener: (inquiryId: string) => void
-  ) => {
-    listeners.push(listener);
-    return self;
-  };
+  const on = (eventName: 'complete' | 'fail' | 'start', listener: (inquiryId: string) => void) => {
+    listeners.push(listener)
+    return self
+  }
 
   const start = () => {
-    const backdrop = document.createElement("div");
+    const backdrop = document.createElement('div')
     backdrop.id = 'persona-js-embedded-flow'
-    backdrop.setAttribute('style', BACKDROP_STYLE.replace(/^\s+/g, '').replace(/\n/g, ''));
+    backdrop.setAttribute('style', BACKDROP_STYLE.replace(/^\s+/g, '').replace(/\n/g, ''))
 
-    const iframe = document.createElement("iframe");
-    iframe.allow = "camera";
-    iframe.src = `https://${host}/widget?template-id=${id}&environment=${environment}&iframe-origin=${window.location.origin}`;
-    iframe.setAttribute(
-      "sandbox",
-      IFRAME_SANDBOX_PERMISSIONS.join(' ')
-    );
+    const iframe = document.createElement('iframe')
+    iframe.allow = 'camera'
+    iframe.src = `https://${host}/widget?template-id=${id}&environment=${environment}&iframe-origin=${window.location.origin}`
+    iframe.setAttribute('sandbox', IFRAME_SANDBOX_PERMISSIONS.join(' '))
     iframe.setAttribute('style', IFRAME_STYLE.replace(/^\s+/g, '').replace(/\n/g, ''))
 
     backdrop.appendChild(iframe)
-    document.body.appendChild(backdrop);
-  };
+    document.body.appendChild(backdrop)
+  }
 
   const getHostedFlowUrl = () => {
-    const hostedUrl = `https://${host}/verify?template-id=${id}&environment=${environment}`;
-    alert(hostedUrl);
-  };
+    const hostedUrl = `https://${host}/verify?template-id=${id}&environment=${environment}`
+    alert(hostedUrl)
+  }
 
   const self = {
     getHostedFlowUrl,
     on,
     prefill: () => {},
     start,
-  };
+  }
 
-  return self;
-};
+  return self
+}
 
-export default verifyClient;
+export default verifyClient
