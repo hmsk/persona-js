@@ -1,10 +1,10 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
-import Persona from '@persona-js/verify'
+import { newInquiry } from '@persona-js/verify'
 
-export default function Home() {
-  const persona = Persona('tmpl_xyz')
+export default function Home(props) {
+  const persona = newInquiry(props.templateId)
   return (
     <div className={styles.container}>
       <button onClick={() => persona.start()}>Start Embedded Flow</button>
@@ -60,4 +60,8 @@ export default function Home() {
       </footer>
     </div>
   )
+}
+
+export async function getStaticProps() {
+  return { props: { templateId: process.env.NEXT_NEW_INQUIRY_TEMPLATE_ID } }
 }
