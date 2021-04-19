@@ -1,3 +1,18 @@
+interface CommonOptions {
+  host: string
+  language: string
+}
+
+interface CreateInquiryOptions extends CommonOptions {
+  environment?: 'sandbox' | 'production'
+  referenceId?: string
+  accountId?: string
+}
+
+interface ResumeInquiryOptions extends CommonOptions {
+  sessionToken: string
+}
+
 const IFRAME_SANDBOX_PERMISSIONS = [
   'allow-same-origin',
   'allow-scripts',
@@ -37,17 +52,36 @@ const BACKDROP_STYLE = `
   overflow-y: scroll;
 `
 
-const verifyClient = (
-  templateId: string,
-  environment: 'sandbox' | 'production' = 'sandbox',
-  host: string = 'withpersona.com',
-) => {
-  const id = templateId
+interface NewInquiryNormalizedOptions {
+  'template-id': string
+  host: string
+  language: string | null
+  environment: string
+  'reference-id': string | null
+  'account-id': string | null
+}
+
+interface ResumeInquiryNormalizedOptions {
+  'inquiry-id': string
+  host: string
+  language: string | null
+  'session-token': string | null
+}
+
+const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeInquiryNormalizedOptions) => {
   const listeners = []
+
+  const search = Object.entries(normalizedOptions)
+    .filter(([key, value]) => {
+      return value !== null && key !== 'host'
+    })
+    .reduce((query, [key, value]) => {
+      return `${query}&${key}=${encodeURIComponent(value)}`
+    }, `?client=something`)
 
   const on = (eventName: 'complete' | 'fail' | 'start', listener: (inquiryId: string) => void) => {
     listeners.push(listener)
-    return self
+    return client
   }
 
   const start = () => {
@@ -57,7 +91,9 @@ const verifyClient = (
 
     const iframe = document.createElement('iframe')
     iframe.allow = 'camera'
-    iframe.src = `https://${host}/widget?template-id=${id}&environment=${environment}&iframe-origin=${window.location.origin}`
+    iframe.src = `https://${normalizedOptions.host}/widget${search}&iframe-origin=${encodeURIComponent(
+      window.location.origin,
+    )}`
     iframe.setAttribute('sandbox', IFRAME_SANDBOX_PERMISSIONS.join(' '))
     iframe.setAttribute('style', IFRAME_STYLE.replace(/^\s+/g, '').replace(/\n/g, ''))
 
@@ -66,18 +102,36 @@ const verifyClient = (
   }
 
   const getHostedFlowUrl = () => {
-    const hostedUrl = `https://${host}/verify?template-id=${id}&environment=${environment}`
+    const hostedUrl = `https://${normalizedOptions.host}/verify${search}`
     alert(hostedUrl)
   }
 
-  const self = {
+  const client = {
     getHostedFlowUrl,
     on,
     prefill: () => {},
     start,
   }
 
-  return self
+  return client
 }
 
-export default verifyClient
+export const newInquiry = (templateId: string, options?: CreateInquiryOptions) => {
+  return generateClient({
+    'template-id': templateId,
+    host: options?.host ?? 'withpersona.com',
+    language: options?.language ?? null,
+    environment: options?.environment ?? 'sandbox',
+    'reference-id': options?.referenceId ?? null,
+    'account-id': options?.accountId ?? null,
+  })
+}
+
+export const resumeInquiry = (inquiryId: string, options?: ResumeInquiryOptions) => {
+  return generateClient({
+    'inquiry-id': inquiryId,
+    host: options?.host ?? 'withpersona.com',
+    language: options?.language ?? null,
+    'session-token': options?.sessionToken ?? null,
+  })
+}
