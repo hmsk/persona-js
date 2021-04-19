@@ -1,6 +1,6 @@
 {
   "name": "@persona-js/verify",
-  "version": "0.0.1-0",
+  "version": "0.0.1",
   "description": "An unofficial Persona client to verify customers",
   "main": "./dist/index.js",
   "repository": "https://github.com/hmsk/persona-js",
