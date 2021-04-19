@@ -1,0 +1,11 @@
+{
+  "packages": [
+    "packages/verify"
+  ],
+  "version": "independent",
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "publish": {
+    "ignoreChanges": ["example-*"]
+  }
+}
