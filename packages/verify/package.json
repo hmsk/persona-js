@@ -9,5 +9,8 @@
   "scripts": {
     "build": "rollup -c rollup.config.ts",
     "build:watch": "yarn build -w"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
