@@ -11,5 +11,5 @@ export default {
     exports: 'named',
   },
 
-  plugins: [typescript()],
+  plugins: [typescript({ tsconfig: './tsconfig.json' })],
 }

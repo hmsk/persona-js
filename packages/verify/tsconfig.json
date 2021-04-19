@@ -6,9 +6,12 @@
     "moduleResolution": "node",
     "isolatedModules": true,
     "strict": true,
+    "declaration": true,
+    "declarationDir": "types",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "include": ["src/*"]
 }
