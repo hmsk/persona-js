@@ -98,7 +98,6 @@ const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeI
     iframe.setAttribute('style', IFRAME_STYLE.replace(/^\s+/g, '').replace(/\n/g, ''))
 
     const messageHandler = (event: MessageEvent) => {
-      console.log(event)
       if (event.origin.includes(`//${normalizedOptions.host}`)) {
         switch (event.data.name) {
           case 'exit':
@@ -116,8 +115,7 @@ const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeI
   }
 
   const getHostedFlowUrl = () => {
-    const hostedUrl = `https://${normalizedOptions.host}/verify${search}`
-    alert(hostedUrl)
+    return `https://${normalizedOptions.host}/verify${search}`
   }
 
   const client = {
