@@ -103,10 +103,10 @@
   resolved "https://registry.yarnpkg.com/@opentelemetry/context-base/-/context-base-0.14.0.tgz#c67fc20a4d891447ca1a855d7d70fa79a3533001"
   integrity sha512-sDOAZcYwynHFTbLo6n8kIbLiVF3a3BLkrmehJUyEbT9F+Smbi47kLGS2gG2g0fjBLR/Lr1InPD7kXL7FaTqEkw==
 
-"@persona-js/verify@0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@persona-js/verify/-/verify-0.0.2.tgz#53d08f35c729337784d0a798cb045dd5cb433d69"
-  integrity sha512-esD4pMMMq0skDaurMU8mPH4vAR36JIak0x+EieSnuFejVtjV9k2rCuOhhvlz/PW3nIZW9FzucFZScOC4xY9fgQ==
+"@persona-js/verify@0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@persona-js/verify/-/verify-0.1.0.tgz#32e1f1956a8bc5ba0b4dbb4f46473f1b1a5b08ad"
+  integrity sha512-X0ryXQHx4MXwxACcuinuvXhnD6naWdblQrke6H3Yw+wropC9ti4ZSozF3ynd58E32J4eay6m+w4vwrbMq2Ym+w==
 
 "@types/node@*":
   version "14.14.41"
