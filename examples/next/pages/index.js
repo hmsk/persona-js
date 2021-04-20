@@ -25,6 +25,21 @@ export default function Home(props) {
             <h3>Open Hosted Flow &rarr;</h3>
             <p>Open a new tab to get through hoted verification flow.</p>
           </a>
+
+          <a href="https://github.com/hmsk/persona-js" className={styles.card} target="_blank" rel="noopener">
+            <h3>Repository &rarr;</h3>
+            <p>Source code of @persona-js/* packages</p>
+          </a>
+
+          <a
+            href="https://www.npmjs.com/package/@persona-js/verify"
+            className={styles.card}
+            target="_blank"
+            rel="noopener"
+          >
+            <h3>@persona-js/verify &rarr;</h3>
+            <p>The vanilla JS client to run verification with withpersona.com</p>
+          </a>
         </div>
       </main>
 
