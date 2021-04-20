@@ -97,6 +97,20 @@ const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeI
     iframe.setAttribute('sandbox', IFRAME_SANDBOX_PERMISSIONS.join(' '))
     iframe.setAttribute('style', IFRAME_STYLE.replace(/^\s+/g, '').replace(/\n/g, ''))
 
+    const messageHandler = (event: MessageEvent) => {
+      console.log(event)
+      if (event.origin.includes(`//${normalizedOptions.host}`)) {
+        switch (event.data.name) {
+          case 'exit':
+            window.removeEventListener('message', messageHandler)
+            backdrop.remove()
+            break
+        }
+      }
+    }
+
+    window.addEventListener('message', messageHandler)
+
     backdrop.appendChild(iframe)
     document.body.appendChild(backdrop)
   }
