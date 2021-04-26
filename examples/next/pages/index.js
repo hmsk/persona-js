@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 
 import { newInquiry } from '@persona-js/verify'
@@ -25,6 +26,13 @@ export default function Home(props) {
             <h3>Open Hosted Flow &rarr;</h3>
             <p>Open a new tab to get through hoted verification flow.</p>
           </a>
+
+          <Link href="/prefill">
+            <a href="/prefill" className={styles.card}>
+              <h3>Prefill Demo</h3>
+              <p>Giving parameters to make prefills on verification process</p>
+            </a>
+          </Link>
 
           <a href="https://github.com/hmsk/persona-js" className={styles.card} target="_blank" rel="noopener">
             <h3>Repository &rarr;</h3>
