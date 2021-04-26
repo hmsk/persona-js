@@ -14,7 +14,7 @@ export default function Home(props) {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>@perosona-js demo with Next.js</h1>
+        <h1 className={styles.title}>@perosona-js demo</h1>
 
         <div className={styles.grid}>
           <a href="#" className={styles.card} onClick={() => persona.start()}>
@@ -29,13 +29,13 @@ export default function Home(props) {
 
           <Link href="/prefill">
             <a href="/prefill" className={styles.card}>
-              <h3>Prefill Demo</h3>
+              <h3>Prefill Demo &crarr;</h3>
               <p>Giving parameters to make prefills on verification process</p>
             </a>
           </Link>
 
           <a href="https://github.com/hmsk/persona-js" className={styles.card} target="_blank" rel="noopener">
-            <h3>Repository &rarr;</h3>
+            <h3>🐙 Repository‍</h3>
             <p>Source code of @persona-js/* packages</p>
           </a>
 
@@ -45,17 +45,11 @@ export default function Home(props) {
             target="_blank"
             rel="noopener"
           >
-            <h3>@persona-js/verify &rarr;</h3>
+            <h3>📦 @persona-js/verify</h3>
             <p>The vanilla JS client to run verification with withpersona.com</p>
           </a>
         </div>
       </main>
-
-      <footer className={styles.footer}>
-        <a href="https://vercel.com" target="_blank" rel="noopener noreferrer">
-          Powered by <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
     </div>
   )
 }
