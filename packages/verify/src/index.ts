@@ -1,6 +1,18 @@
 interface CommonOptions {
   host: string
   language: string
+  prefill?: {
+    nameFirst?: string
+    nameLast?: string
+    birthdate?: string
+    addressStreet1?: string
+    addressCity?: string
+    addressSubdivision?: string
+    addressPostalCode?: string
+    countryCode?: string
+    phoneNumber?: string
+    emailAddress?: string
+  }
 }
 
 interface CreateInquiryOptions extends CommonOptions {
@@ -52,36 +64,62 @@ const BACKDROP_STYLE = `
   overflow-y: scroll;
 `
 
-interface NewInquiryNormalizedOptions {
-  'template-id': string
+const camelToKebab = (camel: string) =>
+  camel
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .replace(/([A-Z])([A-Z])(?=[a-z])/g, '$1-$2')
+    .toLowerCase()
+
+interface CommonNormalizedOptions {
   host: string
   language: string | null
+  prefill: CommonOptions['prefill'] | null
+}
+
+interface NewInquiryNormalizedOptions extends CommonNormalizedOptions {
+  'template-id': string
   environment: string
   'reference-id': string | null
   'account-id': string | null
 }
 
-interface ResumeInquiryNormalizedOptions {
+interface ResumeInquiryNormalizedOptions extends CommonNormalizedOptions {
   'inquiry-id': string
-  host: string
-  language: string | null
   'session-token': string | null
 }
 
 const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeInquiryNormalizedOptions) => {
   const listeners = []
+  let prefills = { ...normalizedOptions.prefill }
+  const givenOptions: NewInquiryNormalizedOptions | ResumeInquiryNormalizedOptions = {
+    ...normalizedOptions,
+    prefill: null,
+  }
 
-  const search = Object.entries(normalizedOptions)
-    .filter(([key, value]) => {
-      return value !== null && key !== 'host'
-    })
-    .reduce((query, [key, value]) => {
-      return `${query}&${key}=${encodeURIComponent(value)}`
-    }, `?client=something`)
+  const getSearchParam = () => {
+    const basicParams = Object.entries(givenOptions)
+      .filter((keyAndValue): keyAndValue is [string, string] => {
+        return keyAndValue[1] !== null && keyAndValue[0] !== 'host'
+      })
+      .reduce((query, [key, value]) => {
+        return `${query}&${key}=${encodeURIComponent(value)}`
+      }, `?client=something`)
+
+    const prefillQueries = Object.entries(prefills)
+      .filter((prefillKeyAndValue): prefillKeyAndValue is [string, string] => prefillKeyAndValue[1] !== undefined)
+      .map(([prefillKey, prefillValue]) => `prefill[${camelToKebab(prefillKey)}]=${encodeURIComponent(prefillValue)}`)
+      .join('&')
+
+    return [basicParams, prefillQueries].join('&')
+  }
 
   const on = (eventName: 'complete' | 'fail' | 'start', listener: (inquiryId: string) => void) => {
     listeners.push(listener)
     return client
+  }
+
+  const prefill = (prefillParams: CommonOptions['prefill']) => {
+    prefills = { ...prefills, ...prefillParams }
   }
 
   const start = () => {
@@ -91,7 +129,7 @@ const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeI
 
     const iframe = document.createElement('iframe')
     iframe.allow = 'camera'
-    iframe.src = `https://${normalizedOptions.host}/widget${search}&iframe-origin=${encodeURIComponent(
+    iframe.src = `https://${normalizedOptions.host}/widget${getSearchParam()}&iframe-origin=${encodeURIComponent(
       window.location.origin,
     )}`
     iframe.setAttribute('sandbox', IFRAME_SANDBOX_PERMISSIONS.join(' '))
@@ -115,13 +153,13 @@ const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeI
   }
 
   const getHostedFlowUrl = () => {
-    return `https://${normalizedOptions.host}/verify${search}`
+    return `https://${normalizedOptions.host}/verify${getSearchParam()}`
   }
 
   const client = {
     getHostedFlowUrl,
     on,
-    prefill: () => {},
+    prefill,
     start,
   }
 
@@ -136,6 +174,7 @@ export const newInquiry = (templateId: string, options?: CreateInquiryOptions) =
     environment: options?.environment ?? 'sandbox',
     'reference-id': options?.referenceId ?? null,
     'account-id': options?.accountId ?? null,
+    prefill: options?.prefill ?? null,
   })
 }
 
@@ -145,5 +184,6 @@ export const resumeInquiry = (inquiryId: string, options?: ResumeInquiryOptions)
     host: options?.host ?? 'withpersona.com',
     language: options?.language ?? null,
     'session-token': options?.sessionToken ?? null,
+    prefill: options?.prefill ?? null,
   })
 }
