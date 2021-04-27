@@ -2,7 +2,9 @@
 
 [![npm](https://img.shields.io/npm/v/@persona-js/verify.svg?style=for-the-badge)](https://www.npmjs.com/package/@persona-js/verify)
 
-An unofficial Persona client to verify customers
+A vanilla JavaScript module to run embedded/hosted flow without any dependencies, against [the official npm module](https://www.npmjs.com/package/persona) which has some dependencies in both internally/externally.
+
+⚠️ This package is still in beta and missing many features of official module, so don't recommend using in production.
 
 ## Install
 
