@@ -38,3 +38,14 @@ verificationWIthPersona.on('complete', () => { /* what I want to do on complete 
 ## License
 
 MIT
+
+## ToDo
+
+- Support event listeners
+- Resume inquriy demo
+- Style polishing
+  - mobile
+  - transition
+  - a11y
+- Test
+- Build for CDN distribution
