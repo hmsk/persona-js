@@ -2,7 +2,9 @@ import typescript from '@rollup/plugin-typescript'
 
 import pkg from './package.json'
 
-export default {
+const plugins = [typescript({ tsconfig: './tsconfig.json' })]
+
+export default [{
   input: './src/index.ts',
 
   output: {
@@ -11,5 +13,15 @@ export default {
     exports: 'named',
   },
 
-  plugins: [typescript({ tsconfig: './tsconfig.json' })],
-}
+  plugins
+}, {
+  input: './src/cdn.ts',
+
+  output: {
+    file: './dist/cdn.js',
+    format: 'iife'
+  },
+
+  plugins
+
+}]
