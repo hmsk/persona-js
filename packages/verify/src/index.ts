@@ -35,6 +35,16 @@ const IFRAME_SANDBOX_PERMISSIONS = [
 ]
 
 const BACKDROP_STYLE = `
+  @keyframes appear-backdrop {
+    from {
+      background-color: #00000000;
+    }
+
+    to {
+      background-color: #000000AA;
+    }
+  }
+
   div#persona-js-embedded-flow {
     position: absolute;
     top: 0;
@@ -43,6 +53,24 @@ const BACKDROP_STYLE = `
     height: 100vh;
     background-color: #000000AA;
     overflow-y: scroll;
+
+    animation-duration: .1s;
+    animation-name: appear-backdrop;
+    animation-timing-function: ease-out;
+  }
+
+  @keyframes appear-iframe {
+    from {
+      margin-top: 68px;
+    }
+
+    90% {
+      margin-top: 62px;
+    }
+
+    to {
+      margin-top: 64px;
+    }
   }
 
   div#persona-js-embedded-flow iframe {
@@ -55,8 +83,9 @@ const BACKDROP_STYLE = `
     left: 0;
     right: 0;
     border-radius: 4px;
-    border: 0;
+    border: none;
     background: white;
+
   }
 
   @media only screen and (min-width: 600px) and (min-height: 600px) {
@@ -64,6 +93,11 @@ const BACKDROP_STYLE = `
       margin-top: 64px;
       max-width: 400px;
       max-height: 650px;
+      box-shadow: 0 12px 40px 2px rbga(0, 0, 0, 0.4);
+
+      animation-duration: .2s;
+      animation-name: appear-iframe;
+      animation-timing-function: ease-out;
     }
   }
 `
@@ -153,8 +187,8 @@ const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeI
 
     window.addEventListener('message', messageHandler)
 
-    backdrop.appendChild(iframe)
     document.body.appendChild(backdrop)
+    backdrop.appendChild(iframe)
   }
 
   const getHostedFlowUrl = () => {
