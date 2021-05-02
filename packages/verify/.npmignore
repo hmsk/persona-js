@@ -2,4 +2,4 @@ rollup.config.ts
 src
 tsconfig.json
 dist/cdn.js
-types/cdn.d.ts
+dist/types/cdn.d.ts
