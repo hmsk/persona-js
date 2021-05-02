@@ -34,34 +34,38 @@ const IFRAME_SANDBOX_PERMISSIONS = [
   'allow-top-navigation-by-user-activation',
 ]
 
-const IFRAME_STYLE = `
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  margin-right: auto;
-  margin-left: auto;
-  margin-bottom: 10%;
-  left: 0;
-  right: 0;
-  border-radius: 4px;
-  border: 0;
-  background: white;
-
-  /*@media only screen and (min-width: 600px) and (min-height: 600px) {*/
-    margin-top: 64px;
-    max-width: 400px;
-    max-height: 650px;
-  /*}*/
-`
-
 const BACKDROP_STYLE = `
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: #000000AA;
-  overflow-y: scroll;
+  div#persona-js-embedded-flow {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #000000AA;
+    overflow-y: scroll;
+  }
+
+  div#persona-js-embedded-flow iframe {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 10%;
+    left: 0;
+    right: 0;
+    border-radius: 4px;
+    border: 0;
+    background: white;
+  }
+
+  @media only screen and (min-width: 600px) and (min-height: 600px) {
+    div#persona-js-embedded-flow iframe {
+      margin-top: 64px;
+      max-width: 400px;
+      max-height: 650px;
+    }
+  }
 `
 
 const camelToKebab = (camel: string) =>
@@ -125,7 +129,9 @@ const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeI
   const start = () => {
     const backdrop = document.createElement('div')
     backdrop.id = 'persona-js-embedded-flow'
-    backdrop.setAttribute('style', BACKDROP_STYLE.replace(/^\s+/g, '').replace(/\n/g, ''))
+    const style = document.createElement('style')
+    style.innerText = BACKDROP_STYLE.replace(/^\s+/g, '').replace(/\n/g, '')
+    backdrop.appendChild(style)
 
     const iframe = document.createElement('iframe')
     iframe.allow = 'camera'
@@ -133,7 +139,6 @@ const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeI
       window.location.origin,
     )}`
     iframe.setAttribute('sandbox', IFRAME_SANDBOX_PERMISSIONS.join(' '))
-    iframe.setAttribute('style', IFRAME_STYLE.replace(/^\s+/g, '').replace(/\n/g, ''))
 
     const messageHandler = (event: MessageEvent) => {
       if (event.origin.includes(`//${normalizedOptions.host}`)) {
