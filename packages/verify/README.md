@@ -42,10 +42,9 @@ MIT
 ## ToDo
 
 - Support event listeners
-- Resume inquriy demo
-- Style polishing
-  - mobile
-  - transition
-  - a11y
+- Support insertion?
+- a11y
 - Test
-- Build for CDN distribution
+- Demo
+  - CDN ver
+  - Resume inquriy demo
