@@ -41,10 +41,14 @@ MIT
 
 ## ToDo
 
-- Support event listeners
+- Support preload embedded flow
+  - `.preload(): Promise<void>`
+- Support undocumented events?
+  - Like `verification-change`, `country-select`...etc
 - Support insertion?
 - a11y
 - Test
 - Demo
   - CDN ver
   - Resume inquriy demo
+  - Popup events from embedded flow
