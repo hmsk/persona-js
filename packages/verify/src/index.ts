@@ -189,6 +189,11 @@ const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeI
     iframe.setAttribute('sandbox', IFRAME_SANDBOX_PERMISSIONS.join(' '))
 
     const messageHandler = (event: MessageEvent) => {
+      const closeEmbededFlow = () => {
+        window.removeEventListener('message', messageHandler)
+        backdrop.remove()
+      }
+
       if (event.origin.includes(`//${normalizedOptions.host}`)) {
         switch (event.data.name) {
           case 'start': {
@@ -209,6 +214,7 @@ const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeI
                 console.error('[@persona-js/verify]', `Failed to run 'complete' event listener #${i}`)
               }
             })
+            closeEmbededFlow()
             break
           }
           case 'fail': {
@@ -229,8 +235,7 @@ const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeI
                 console.error('[@persona-js/verify]', `Failed to run 'exit' event listener #${i}`)
               }
             })
-            window.removeEventListener('message', messageHandler)
-            backdrop.remove()
+            closeEmbededFlow()
             break
         }
       }
