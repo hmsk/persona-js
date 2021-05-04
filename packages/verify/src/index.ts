@@ -126,8 +126,22 @@ interface ResumeInquiryNormalizedOptions extends CommonNormalizedOptions {
   'session-token': string | null
 }
 
+export enum EventType {
+  Start = 'start',
+  Complete = 'complete',
+  Fail = 'fail',
+  Load = 'load',
+  Exit = 'exit',
+}
+
 const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeInquiryNormalizedOptions) => {
-  const listeners = []
+  const listeners: Record<EventType, ((inquiryId?: string) => void)[]> = {
+    start: [],
+    complete: [],
+    fail: [],
+    load: [],
+    exit: [],
+  }
   let prefills = { ...normalizedOptions.prefill }
   const givenOptions: NewInquiryNormalizedOptions | ResumeInquiryNormalizedOptions = {
     ...normalizedOptions,
@@ -151,8 +165,8 @@ const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeI
     return [basicParams, prefillQueries].join('&')
   }
 
-  const on = (eventName: 'complete' | 'fail' | 'start', listener: (inquiryId: string) => void) => {
-    listeners.push(listener)
+  const on = (eventName: EventType, listener: (inquiryId?: string) => void) => {
+    listeners[eventName].push(listener)
     return client
   }
 
@@ -177,7 +191,44 @@ const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeI
     const messageHandler = (event: MessageEvent) => {
       if (event.origin.includes(`//${normalizedOptions.host}`)) {
         switch (event.data.name) {
+          case 'start': {
+            listeners[EventType.Start].forEach((listener, i) => {
+              try {
+                listener(event.data.metadata.inquiryId)
+              } catch {
+                console.error('[@persona-js/verify]', `Failed to run 'start' event listener #${i}`)
+              }
+            })
+            break
+          }
+          case 'complete': {
+            listeners[EventType.Complete].forEach((listener, i) => {
+              try {
+                listener(event.data.metadata.inquiryId)
+              } catch {
+                console.error('[@persona-js/verify]', `Failed to run 'complete' event listener #${i}`)
+              }
+            })
+            break
+          }
+          case 'fail': {
+            listeners[EventType.Fail].forEach((listener, i) => {
+              try {
+                listener(event.data.metadata.inquiryId)
+              } catch {
+                console.error('[@persona-js/verify]', `Failed to run 'fail' event listener #${i}`)
+              }
+            })
+            break
+          }
           case 'exit':
+            listeners[EventType.Exit].forEach((listener, i) => {
+              try {
+                listener(event.data.metadata.inquiryId ?? null)
+              } catch {
+                console.error('[@persona-js/verify]', `Failed to run 'exit' event listener #${i}`)
+              }
+            })
             window.removeEventListener('message', messageHandler)
             backdrop.remove()
             break
