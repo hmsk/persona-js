@@ -27,12 +27,18 @@ verificationWithPersona.prefill({ nameFirst: 'Kengo' })
 // Also constructor function can accepts prefiling
 newInquiry(TEMPLATE_ID, { prefill: { nameFirst: 'Kengo' } })
 
-verificationWithPersona.start() //=> Embedded flow starts on current window
-verificationWithPersona.getHostedFlowUrl() //=> Returns URL for the hosted flow
+// Event listening
+verificationWIthPersona.on('start', (inquiryId) => { /* what I want to do on starting inquiry flow */ })
 
-// Unsupported yet
-verificationWIthPersona.on('start', () => { /* what I want to do on start inquiry flow */ })
-verificationWIthPersona.on('complete', () => { /* what I want to do on complete inquiry flow */ })
+verificationWithPersona.getHostedFlowUrl() //=> Returns URL for the hosted flow
+verificationWithPersona.start() //=> Embedded flow starts on current window
+
+// Can chain
+newInquiry(TEMPLATE_ID)
+  .prefill({ nameLast: 'Hamasaki' })
+  .on('complete', (inquiryId) => { /* what I want to do on completing embedded flow */ })
+  .on('fail', (inquiryId) => { /* what I want to do on failing embedded flow */ })
+  .on('exit', () => { /* what I want to do on exiting embedded flow */ })
 ```
 
 ## License
@@ -45,10 +51,13 @@ MIT
   - `.preload(): Promise<void>`
 - Support undocumented events?
   - Like `verification-change`, `country-select`...etc
-- Support insertion?
+- Support insertion into a specific element on HTML?
+- Throw exceptions on unintentional parameters/arguments
 - a11y
+- Separate down the monolithic `index.ts`
 - Test
 - Demo
   - CDN ver
   - Resume inquriy demo
   - Popup events from embedded flow
+  - Do with TypeScript
