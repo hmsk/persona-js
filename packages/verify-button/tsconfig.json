@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "esnext",
+    "strict": true,
+    "declaration": true,
+    "declarationDir": "types"
+  },
+  "include": ["src/*"]
+}
