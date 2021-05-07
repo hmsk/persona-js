@@ -1,5 +1,0 @@
-rollup.config.ts
-src
-tsconfig.json
-dist/cdn.js
-dist/types/cdn.d.ts
