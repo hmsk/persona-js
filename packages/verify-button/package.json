@@ -1,6 +1,6 @@
 {
   "name": "@persona-js/verify-button",
-  "version": "0.0.1-0",
+  "version": "0.0.1-1",
   "description": "Custome Element to run inquiry flow with Persona",
   "main": "./dist/index.umd.js",
   "module": "./dist/index.js",
@@ -12,7 +12,9 @@
     "build": "rm -rf dist/ && rollup -c rollup.config.ts",
     "build:watch": "yarn build -w"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "publishConfig": {
     "access": "public"
