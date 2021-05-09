@@ -34,6 +34,11 @@ export default function Home(props) {
             </a>
           </Link>
 
+          <a href="https://persona-js.netlify.app/" className={styles.card} target="_blank" rel="noopener">
+            <h3>🌐 CDN build</h3>
+            <p>Instant bootstraping with distributed script</p>
+          </a>
+
           <a href="https://github.com/hmsk/persona-js" className={styles.card} target="_blank" rel="noopener">
             <h3>🐙 Repository‍</h3>
             <p>Source code of @persona-js/* packages</p>
