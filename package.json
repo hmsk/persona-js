@@ -18,5 +18,8 @@
     "rollup-plugin-terser": "7.0.2",
     "typescript": "4.2.4"
   },
-  "name": "persona-js"
+  "name": "persona-js",
+  "scripts": {
+    "prepublish": "yarn workspace @persona-js/verify build"
+  }
 }
