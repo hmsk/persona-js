@@ -10,6 +10,8 @@ Unofficial JS modules for [Persona](https://withpersona.com).
 
 - React/Next.js `/examples/next`
   - https://persona.vercel.app
+- CDN build usage `/examples/static`
+  - https://persona-js.netlify.app
 
 ## License
 

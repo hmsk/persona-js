@@ -57,7 +57,6 @@ MIT
 - Separate down the monolithic `index.ts`
 - Test
 - Demo
-  - CDN ver
   - Resume inquriy demo
   - Popup events from embedded flow
   - Do with TypeScript
