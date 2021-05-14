@@ -34,17 +34,20 @@ const IFRAME_SANDBOX_PERMISSIONS = [
   'allow-top-navigation-by-user-activation',
 ]
 
-const BACKDROP_STYLE = `
-  @keyframes appear-backdrop {
-    from {
-      background-color: #00000000;
-    }
-
-    to {
-      background-color: #000000AA;
-    }
+const BACKDROP_SEAL_STYLE = `
+  div#persona-js-embedded-flow {
+    visibility: hidden;
+    background-color: #00000000;
   }
 
+  @media only screen and (min-width: 600px) and (min-height: 600px) {
+    div#persona-js-embedded-flow iframe {
+      margin-top: 68px;
+    }
+  }
+`
+
+const BACKDROP_STYLE = `
   div#persona-js-embedded-flow {
     position: absolute;
     top: 0;
@@ -55,24 +58,7 @@ const BACKDROP_STYLE = `
     height: 100vh;
     background-color: #000000AA;
     overflow-y: scroll;
-
-    animation-duration: .1s;
-    animation-name: appear-backdrop;
-    animation-timing-function: ease-out;
-  }
-
-  @keyframes appear-iframe {
-    from {
-      margin-top: 68px;
-    }
-
-    90% {
-      margin-top: 62px;
-    }
-
-    to {
-      margin-top: 64px;
-    }
+    transition: background-color .2s ease-out;
   }
 
   div#persona-js-embedded-flow iframe {
@@ -96,10 +82,7 @@ const BACKDROP_STYLE = `
       max-width: 400px;
       max-height: 650px;
       box-shadow: 0 12px 40px 2px rbga(0, 0, 0, 0.4);
-
-      animation-duration: .2s;
-      animation-name: appear-iframe;
-      animation-timing-function: ease-out;
+      transition: margin-top .25s ease-out;
     }
   }
 `
@@ -183,6 +166,10 @@ const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeI
     style.innerText = BACKDROP_STYLE.replace(/^\s+/g, '').replace(/\n/g, '')
     backdrop.appendChild(style)
 
+    const seal = document.createElement('style')
+    seal.innerText = BACKDROP_SEAL_STYLE.replace(/^\s+/g, '').replace(/\n/g, '')
+    backdrop.appendChild(seal)
+
     const iframe = document.createElement('iframe')
     iframe.allow = 'camera'
     iframe.src = `https://${normalizedOptions.host}/widget${getSearchParam()}&iframe-origin=${encodeURIComponent(
@@ -198,6 +185,12 @@ const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeI
 
       if (event.origin.includes(`//${normalizedOptions.host}`)) {
         switch (event.data.name) {
+          case 'load': {
+            setTimeout(() => {
+              seal.remove()
+            }, 1000)
+            break
+          }
           case 'start': {
             listeners[EventType.Start].forEach((listener, i) => {
               try {
