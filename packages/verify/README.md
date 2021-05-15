@@ -47,8 +47,8 @@ MIT
 
 ## ToDo
 
-- Support preload embedded flow
-  - `.preload(): Promise<void>`
+- Use shadow DOM
+- Avoid multiple UI insertions
 - Support undocumented events?
   - Like `verification-change`, `country-select`...etc
 - Support insertion into a specific element on HTML?
