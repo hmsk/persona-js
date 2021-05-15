@@ -159,23 +159,58 @@ const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeI
     prefills = { ...prefills, ...prefillParams }
   }
 
-  const start = () => {
+  const createBackDrop = (): HTMLDivElement => {
     const backdrop = document.createElement('div')
     backdrop.id = 'persona-js-embedded-flow'
     const style = document.createElement('style')
+    style.className = 'backdrop'
     style.innerText = BACKDROP_STYLE.replace(/^\s+/g, '').replace(/\n/g, '')
     backdrop.appendChild(style)
+    return backdrop
+  }
 
+  const sealBackdrop = (backdrop: HTMLDivElement): HTMLStyleElement => {
     const seal = document.createElement('style')
+    seal.className = 'veil'
     seal.innerText = BACKDROP_SEAL_STYLE.replace(/^\s+/g, '').replace(/\n/g, '')
     backdrop.appendChild(seal)
+    return seal
+  }
 
+  const buildIframe = (): HTMLIFrameElement => {
     const iframe = document.createElement('iframe')
     iframe.allow = 'camera'
     iframe.src = `https://${normalizedOptions.host}/widget${getSearchParam()}&iframe-origin=${encodeURIComponent(
       window.location.origin,
     )}`
     iframe.setAttribute('sandbox', IFRAME_SANDBOX_PERMISSIONS.join(' '))
+    return iframe
+  }
+
+  const preload = (): Promise<void> => {
+    return new Promise((resolve) => {
+      const backdrop = createBackDrop()
+      sealBackdrop(backdrop)
+
+      const messageHandler = (event: MessageEvent) => {
+        if (event.origin.includes(`//${normalizedOptions.host}`)) {
+          if (event.data.name === 'load') {
+            window.removeEventListener('message', messageHandler)
+            resolve()
+          }
+        }
+      }
+      window.addEventListener('message', messageHandler)
+
+      document.body.appendChild(backdrop)
+      backdrop.appendChild(buildIframe())
+    })
+  }
+
+  const start = () => {
+    const backdrop = (document.getElementById('persona-js-embedded-flow') as HTMLDivElement) ?? createBackDrop()
+    const seal = backdrop.querySelector('style.veil') ?? sealBackdrop(backdrop)
+    const iframe = backdrop.querySelector('iframe') ?? buildIframe()
 
     const messageHandler = (event: MessageEvent) => {
       const closeEmbededFlow = () => {
@@ -186,9 +221,7 @@ const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeI
       if (event.origin.includes(`//${normalizedOptions.host}`)) {
         switch (event.data.name) {
           case 'load': {
-            setTimeout(() => {
-              seal.remove()
-            }, 1000)
+            seal.remove()
             break
           }
           case 'start': {
@@ -235,11 +268,14 @@ const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeI
         }
       }
     }
-
     window.addEventListener('message', messageHandler)
 
-    document.body.appendChild(backdrop)
-    backdrop.appendChild(iframe)
+    if (document.getElementById('persona-js-embedded-flow')) {
+      seal.remove()
+    } else {
+      document.body.appendChild(backdrop)
+      backdrop.appendChild(iframe)
+    }
   }
 
   const getHostedFlowUrl = () => {
@@ -250,6 +286,7 @@ const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeI
     getHostedFlowUrl,
     on,
     prefill,
+    preload,
     start,
   }
 
