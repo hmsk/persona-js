@@ -34,6 +34,13 @@ export default function Home(props) {
             </a>
           </Link>
 
+          <Link href="/preload">
+            <a href="/preload" className={styles.card}>
+              <h3>Preload Demo &crarr;</h3>
+              <p>Loading Persona assets beforehand</p>
+            </a>
+          </Link>
+
           <a href="https://persona-js.netlify.app/" className={styles.card} target="_blank" rel="noopener">
             <h3>🌐 CDN build</h3>
             <p>Instant bootstraping with distributed script</p>

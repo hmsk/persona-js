@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 
 import { newInquiry } from '@persona-js/verify'
@@ -81,6 +82,13 @@ export default function Home(props) {
               Prefill <code>countryCode, emailAddress</code> through the <code>prefill</code> function
             </p>
           </a>
+
+          <Link href="/">
+            <a href="/" className={styles.card}>
+              <h3>&uarr;</h3>
+              <p>Back to index page</p>
+            </a>
+          </Link>
         </div>
       </main>
     </div>
