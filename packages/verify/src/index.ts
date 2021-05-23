@@ -34,58 +34,10 @@ const IFRAME_SANDBOX_PERMISSIONS = [
   'allow-top-navigation-by-user-activation',
 ]
 
-const BACKDROP_SEAL_STYLE = `
-  div#persona-js-embedded-flow {
-    visibility: hidden;
-    background-color: #00000000;
-  }
-
-  @media only screen and (min-width: 600px) and (min-height: 600px) {
-    div#persona-js-embedded-flow iframe {
-      margin-top: 68px;
-    }
-  }
-`
-
-const BACKDROP_STYLE = `
-  div#persona-js-embedded-flow {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: #000000AA;
-    overflow-y: scroll;
-    transition: background-color .2s ease-out;
-  }
-
-  div#persona-js-embedded-flow iframe {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    margin-right: auto;
-    margin-left: auto;
-    margin-bottom: 10%;
-    left: 0;
-    right: 0;
-    border-radius: 4px;
-    border: none;
-    background: white;
-
-  }
-
-  @media only screen and (min-width: 600px) and (min-height: 600px) {
-    div#persona-js-embedded-flow iframe {
-      margin-top: 64px;
-      max-width: 400px;
-      max-height: 650px;
-      box-shadow: 0 12px 40px 2px rbga(0, 0, 0, 0.4);
-      transition: margin-top .25s ease-out;
-    }
-  }
-`
+const BACKDROP_SEAL_STYLE =
+  'div#persona-js-embedded-flow{visibility:hidden;background-color:#00000000}@media only screen and (min-width:600px) and (min-height:600px){div#persona-js-embedded-flow iframe{margin-top:68px}}'
+const BACKDROP_STYLE =
+  'div#persona-js-embedded-flow{position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100vh;background-color:#000000AA;overflow-y:scroll;transition:background-color .2s ease-out}div#persona-js-embedded-flow iframe{position:absolute;width:100%;height:100%;margin-right:auto;margin-left:auto;margin-bottom:10%;left:0;right:0;border-radius:4px;border:none;background:#fff}@media only screen and (min-width:600px) and (min-height:600px){div#persona-js-embedded-flow iframe{margin-top:64px;max-width:400px;max-height:650px;box-shadow:0 12px 40px 2px rbga(0,0,0,.4);transition:margin-top .25s ease-out}}'
 
 const camelToKebab = (camel: string) =>
   camel
@@ -164,7 +116,7 @@ const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeI
     backdrop.id = 'persona-js-embedded-flow'
     const style = document.createElement('style')
     style.className = 'backdrop'
-    style.innerText = BACKDROP_STYLE.replace(/^\s+/g, '').replace(/\n/g, '')
+    style.innerText = BACKDROP_STYLE
     backdrop.appendChild(style)
     return backdrop
   }
@@ -172,7 +124,7 @@ const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeI
   const sealBackdrop = (backdrop: HTMLDivElement): HTMLStyleElement => {
     const seal = document.createElement('style')
     seal.className = 'veil'
-    seal.innerText = BACKDROP_SEAL_STYLE.replace(/^\s+/g, '').replace(/\n/g, '')
+    seal.innerText = BACKDROP_SEAL_STYLE
     backdrop.appendChild(seal)
     return seal
   }
