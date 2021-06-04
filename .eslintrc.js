@@ -5,7 +5,7 @@ module.exports = {
     es6: true,
   },
   parserOptions: { ecmaVersion: 8 },
-  ignorePatterns: ['node_modules/*'],
+  ignorePatterns: ['**/dist'],
   extends: ['eslint:recommended', 'prettier'],
   overrides: [
     {
@@ -17,10 +17,7 @@ module.exports = {
         node: true,
         es6: true,
       },
-      extends: [
-        'eslint:recommended',
-        'plugin:@typescript-eslint/recommended',
-      ],
+      extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
       plugins: ['simple-import-sort'],
       rules: {
         eqeqeq: 'error',

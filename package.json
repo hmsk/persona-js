@@ -12,6 +12,9 @@
     "@typescript-eslint/eslint-plugin": "4.26.0",
     "@typescript-eslint/parser": "4.26.0",
     "eslint": "7.27.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-prettier": "3.4.0",
+    "eslint-plugin-simple-import-sort": "7.0.0",
     "lerna": "4.0.0",
     "prettier": "2.3.0",
     "rollup": "2.50.6",
@@ -20,6 +23,8 @@
   },
   "name": "persona-js",
   "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "prettier": "prettier --check .",
     "prepublish": "yarn workspace @persona-js/verify build"
   }
 }
