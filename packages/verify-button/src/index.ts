@@ -1,7 +1,7 @@
 export default class VerifyButtonElement extends HTMLElement {
-  constructor () {
+  constructor() {
     super()
-    const shadow = this.attachShadow({mode: 'open'});
+    const shadow = this.attachShadow({ mode: 'open' })
   }
 }
 

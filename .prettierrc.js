@@ -1,7 +1,7 @@
 module.exports = {
-  embeddedLanguageFormatting: "off",
+  embeddedLanguageFormatting: 'off',
   printWidth: 120,
   semi: false,
   singleQuote: true,
-  trailingComma: "all"
+  trailingComma: 'all',
 }

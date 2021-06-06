@@ -1,26 +1,28 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Static Demos</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1/new.min.css" crossorigin>
-  <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css" crossorigin>
-  <link rel="preload" href="https://unpkg.com/@persona-js/verify@0.4.0/dist/cdn.js" as="script" crossorigin>
-</head>
-<body>
-  <header>@persona-js Bundled Script Usage</header>
-  <h1>Load cdn.js (1.7KB gzipped)</h1>
+  <head>
+    <meta charset="utf-8" />
+    <title>Static Demos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1/new.min.css" crossorigin />
+    <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css" crossorigin />
+    <link rel="preload" href="https://unpkg.com/@persona-js/verify@0.4.0/dist/cdn.js" as="script" crossorigin />
+  </head>
+  <body>
+    <header>@persona-js Bundled Script Usage</header>
+    <h1>Load cdn.js (1.7KB gzipped)</h1>
     <pre>&lt;script defer src=&quot;https://unpkg.com/@persona-js/verify@0.4.0/dist/cdn.js&quot; /&gt;</pre>
-  <h2>Use given function</h2>
-  <p>Call interfaces of <code>@persona-js</code> through <code>window.Persona</code></p>
-  <pre>&lt;a href=&quot;#&quot; onClick=&quot;window.Persona.newInquiry('TEMPLATE_ID').start()&quot;&gt;
+    <h2>Use given function</h2>
+    <p>Call interfaces of <code>@persona-js</code> through <code>window.Persona</code></p>
+    <pre>
+&lt;a href=&quot;#&quot; onClick=&quot;window.Persona.newInquiry('TEMPLATE_ID').start()&quot;&gt;
 &nbsp;&nbsp;&lt;button&gt;Start New Inquiry&lt;/button&gt;
-&lt;/a&gt;</pre>
-  <p>
-    <a href="#" onClick="window.Persona.newInquiry('tmpl_p8miPyg2wfWdqhYx6c7cdjjP').start()">
-      <button>Start New Inquiry</button>
-    </a>
-  </p>
-  <script defer src="https://unpkg.com/@persona-js/verify@0.4.0/dist/cdn.js"></script>
-</body>
+&lt;/a&gt;</pre
+    >
+    <p>
+      <a href="#" onClick="window.Persona.newInquiry('tmpl_p8miPyg2wfWdqhYx6c7cdjjP').start()">
+        <button>Start New Inquiry</button>
+      </a>
+    </p>
+    <script defer src="https://unpkg.com/@persona-js/verify@0.4.0/dist/cdn.js"></script>
+  </body>
 </html>

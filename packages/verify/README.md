@@ -59,7 +59,7 @@ const verificationWithPersona = newInquiry('tmpl_xyzxyzxyz')
 verificationWithPersona.prefill({ nameFirst: 'Kengo' })
 ```
 
-#### Also constructor function can accepts prefiling 
+#### Also constructor function can accepts prefiling
 
 ```ts
 import { newInquiry } from '@persona-js/verify'
