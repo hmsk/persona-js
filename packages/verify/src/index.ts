@@ -71,7 +71,17 @@ export enum EventType {
   Exit = 'exit',
 }
 
-const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeInquiryNormalizedOptions) => {
+interface PersonaVerifyClient {
+  getHostedFlowUrl: () => string
+  on: (eventName: EventType, listener: (inquiryId?: string | undefined) => unknown) => void
+  prefill: (prefillParams: CommonOptions['prefill']) => void
+  preload: () => Promise<void>
+  start: () => void
+}
+
+const generateClient = (
+  normalizedOptions: NewInquiryNormalizedOptions | ResumeInquiryNormalizedOptions,
+): PersonaVerifyClient => {
   const listeners: Record<EventType, ((inquiryId?: string) => void)[]> = {
     start: [],
     complete: [],
@@ -245,7 +255,7 @@ const generateClient = (normalizedOptions: NewInquiryNormalizedOptions | ResumeI
   return client
 }
 
-export const newInquiry = (templateId: string, options?: CreateInquiryOptions) => {
+export const newInquiry = (templateId: string, options?: CreateInquiryOptions): PersonaVerifyClient => {
   return generateClient({
     'template-id': templateId,
     host: options?.host ?? 'withpersona.com',
@@ -257,7 +267,7 @@ export const newInquiry = (templateId: string, options?: CreateInquiryOptions) =
   })
 }
 
-export const resumeInquiry = (inquiryId: string, options?: ResumeInquiryOptions) => {
+export const resumeInquiry = (inquiryId: string, options?: ResumeInquiryOptions): PersonaVerifyClient => {
   return generateClient({
     'inquiry-id': inquiryId,
     host: options?.host ?? 'withpersona.com',

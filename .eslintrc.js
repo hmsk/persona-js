@@ -5,7 +5,7 @@ module.exports = {
     es6: true,
   },
   parserOptions: { ecmaVersion: 8 },
-  ignorePatterns: ['**/dist'],
+  ignorePatterns: ['**/dist', 'examples/next/pages/*.js'], // TODO: TSnize Next sample
   extends: ['eslint:recommended', 'prettier'],
   overrides: [
     {
