@@ -2,10 +2,22 @@ import Head from 'next/head'
 import Link from 'next/link'
 import styles from '../styles/Home.module.css'
 
+import { useSnackbar } from 'notistack'
 import { newInquiry } from '@persona-js/verify'
 
 export default function Home(props) {
   const persona = newInquiry(props.templateId)
+  const { enqueueSnackbar } = useSnackbar()
+  persona.on('exit', () => {
+    enqueueSnackbar('"exit" event emitted', {
+      anchorOrigin: {
+        vertical: 'top',
+        horizontal: 'right',
+      },
+      variant: 'info',
+    })
+  })
+
   return (
     <div className={styles.container}>
       <Head>
