@@ -44,7 +44,7 @@ window.open(url)
 ### Resume a incompleted inquiry
 
 ```ts
-import { resumeInquiry } from `@persona-js/veerify`
+import { resumeInquiry } from `@persona-js/verify`
 
 const verificationWithPersona = resumeInquiry('inq_abcabcabc')
 verificationWithPersona.start()
@@ -109,7 +109,6 @@ MIT, Copyright 2021 Kengo Hamasaki <k.hamasaki@gmail.com>
 
 ## ToDo
 
-- Use shadow DOM
 - Avoid multiple UI insertions
 - Support undocumented events?
   - Like `verification-change`, `country-select`...etc
