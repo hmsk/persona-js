@@ -9,7 +9,7 @@ A vanilla JavaScript module to run embedded/hosted flow without any dependencies
 ## Install
 
 ```sh
-npx i @persona-js/verify
+npm i @persona-js/verify
 ```
 
 or load CDN version on the fly. This defines `window.Persona` where `newInquiry`, `resumeInquiry` belongs to.
