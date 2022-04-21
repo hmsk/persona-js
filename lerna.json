@@ -1,6 +1,0 @@
-{
-  "packages": ["packages/verify"],
-  "version": "independent",
-  "npmClient": "yarn",
-  "useWorkspaces": true
-}
