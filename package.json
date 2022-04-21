@@ -1,6 +1,6 @@
 {
   "description": "JS libraries to use withpersona.com",
-  "repository": "ssh://git@github.com/hmsk/vue-persona.git",
+  "repository": "https://github.com/hmsk/persona-js",
   "author": "Kengo Hamasaki <k.hamasaki@gmail.com>",
   "license": "MIT",
   "private": true,
